@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Aliaser</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Aliaser to give URLs aliases">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}"/>
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+{# {% include 'navigation.jinja2' %} #}
+{% block content %}{% endblock %}
+</body>
+
+</html>
