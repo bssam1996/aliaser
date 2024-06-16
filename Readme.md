@@ -1,5 +1,3 @@
-[<img src="static/img/aliaser.png" width="250"/>](static/img/aliaser.png)
-
 # Aliaser
 
 Create aliases for long boring links with ease to use.
