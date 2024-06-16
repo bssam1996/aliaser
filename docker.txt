@@ -1,0 +1,5 @@
+docker build -t aliaser:v1 .
+
+docker run -e DEBUG=False -e REDIS_HOST=redis -e REDIS_PORT=6379 -e BACKUP_SCHEDULE=3600 aliaser:v1
+
+docker-compose up

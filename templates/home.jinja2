@@ -1,12 +1,19 @@
 {% extends 'layout.jinja2' %}
 
 {% block css %}
+  <link href="{{ url_for('static', filename='css/all.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/dataTables.bootstrap5.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/modals/create_replace_modal.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Aliaser</h1>
-        <p>Hello</p>
+    <div class="form-class">
+    <img src="{{ url_for('static', filename='img/aliaser.png') }}" class="main-image"><br>
+      <input id="create_replace_modal_button" type="button" value="Create/Replace" class="main-create-replace-btn">
     </div>
+    {% include 'table.jinja2' %}
+    {% include './modals/create_replace.jinja2' %}
+    {# {% block table %}{% endblock %} #}
 {% endblock %}

@@ -1,0 +1,66 @@
+<!-- The Modal -->
+<div id="create_replace_modal" class="create-replace-modal">
+
+  <!-- Modal content -->
+    <div class="create-replace-modal-content">
+        <div class="create-replace-modal-header">
+            <span class="create-replace-modal-close">&times;</span>
+            <h3>Create/Replace alias</h3>
+        </div>
+        <div class="create-replace-modal-body">
+        <form method="post">
+            <div class="formbold-input-group">
+                <label for="alias" class="formbold-form-label"> Alias* </label>
+                <input
+                type="text"
+                name="alias"
+                id="alias"
+                placeholder="Enter your alias"
+                class="formbold-form-input"
+                required
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="link" class="formbold-form-label"> Link* </label>
+                <input
+                type="text"
+                name="link"
+                id="link"
+                placeholder="Enter your link"
+                class="formbold-form-input"
+                required
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="owner" class="formbold-form-label"> Owner </label>
+                <input
+                type="text"
+                name="owner"
+                id="owner"
+                placeholder="Owner's name"
+                class="formbold-form-input"
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="category" class="formbold-form-label"> Category </label>
+                <select name="category" id="category" class="formbold-form-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="UDM">UDM</option>
+                    <option value="DC">DC</option>
+                    <option value="DM">DM</option>
+                    <option value="Mermaid">Mermaid</option>
+                </select>
+            </div>
+            <br>
+            <div id="error_create_replace" class="error-message"></div>
+            <div id="success_create_replace" class="success-message"></div>
+            <div class="create-replace-button-div">
+                <input type="submit" value="Create" class="create-btn create-formbold-btn" formaction="javascript:add_alias(false)">
+                <input type="submit" value="Replace" class="replace-btn replace-formbold-btn" formaction="javascript:add_alias(true)">
+            </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/modals/modals.js') }}"></script>

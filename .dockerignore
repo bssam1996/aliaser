@@ -1,0 +1,10 @@
+Dockerfile
+.env
+docker.txt
+docker-compose.yml
+left.txt
+locations.json
+redis.txt
+venv
+__pycache__
+api/__pycache__

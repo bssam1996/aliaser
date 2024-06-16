@@ -2,6 +2,7 @@ import requests
 import base64
 import json
 import datetime
+import logging
 
 
 def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token):
@@ -23,15 +24,15 @@ def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token
 
     r = requests.get(path, auth=(user,token))
     if not r.ok:
-        print(f"Error when retrieving branch info from {path}")
-        print(f"Reason: {r.text} [{r.status_code}]")
+        logging.critical(f"Error when retrieving branch info from {path}")
+        logging.critical(f"Reason: {r.text} [{r.status_code}]")
         return False
     rjson = r.json()
     treeurl = rjson['commit']['commit']['tree']['url']
     r2 = requests.get(treeurl, auth=(user,token))
     if not r2.ok:
-        print(f"Error when retrieving commit tree from {treeurl}")
-        print(f"Reason: {r2.text} [{r2.status_code}]")
+        logging.critical(f"Error when retrieving commit tree from {treeurl}")
+        logging.critical(f"Reason: {r2.text} [{r2.status_code}]")
         return False
     r2json = r2.json()
     sha = None
@@ -43,7 +44,7 @@ def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token
 
     # if sha is None after the for loop, we did not find the file name!
     if sha is None:
-        print("Could not find " + gitHubFileName + " in repos 'tree' ")
+        logging.critical("Could not find " + gitHubFileName + " in repos 'tree' ")
         return False
 
     with open(fileName) as data:
@@ -62,14 +63,14 @@ def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token
     try:
         rPut = requests.put(updateURL, auth=(user,token), data = json.dumps(inputdata))
         if not rPut.ok:
-            print("Error when pushing to %s" % updateURL)
-            print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
+            logging.critical("Error when pushing to %s" % updateURL)
+            logging.critical("Reason: %s [%d]" % (rPut.text, rPut.status_code))
             return False
     except requests.exceptions.RequestException as e:
-        print('Something went wrong! I will print all the information that is available so you can figure out what happend!')
-        print(rPut)
-        print(rPut.headers)
-        print(rPut.text)
-        print(e)
+        logging.critical('Something went wrong! I will print all the information that is available so you can figure out what happend!')
+        logging.critical(rPut)
+        logging.critical(rPut.headers)
+        logging.critical(rPut.text)
+        logging.critical(e)
         return False
     return True

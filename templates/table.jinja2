@@ -1,0 +1,44 @@
+{% block css %}
+
+{% endblock %}
+<div class="keys-table-div">
+    <table id="keys_table" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Owner</th>
+                <th>Category</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for element in elements %}
+                {% set alias = element.get("alias") %}
+                <tr data-row-id='{{element.get("alias")}}'>
+                    <td><a href='{{element.get("link")}}' target="_blank">{{alias}}</a></td>
+                    <td>{{element.get("owner")}}</td>
+                    <td>{{element.get("category")}}</td>
+                    <td>{{element.get("created")}}</td>
+                    <td>{{element.get("modified")}}</td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="delete-btn" onclick='delete_alias("{{alias}}")'><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Alias</th>
+                <th>Owner</th>
+                <th>Category</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -1,97 +1,130 @@
 from api import bp
-from api import filehelper
-from api import git
 from api import redishelper
-from flask import request, render_template, redirect
+from api import constants
+from api import utils
+from http import HTTPStatus
+import datetime
+from flask import request, render_template, url_for, jsonify
 import json
+import logging
+
 
 @bp.route("/")
 @redishelper.redis_connection
 def landscreen():
-    # if helpers.locations_data is None:
-    #     print("Data is empty ... importing data")
-    #     helpers.parse_file()
-    return render_template("home.jinja2") 
+    try:
+        err, keys = redishelper.get_all_keys()
+        if err:
+            return render_template("home.jinja2", elements=[]), HTTPStatus.INTERNAL_SERVER_ERROR
+        values = []
+        for key in keys:
+            err, val = redishelper.get_key(key=key)
+            if err:
+                break
+            val = json.loads(val)
+            val["alias"] = key.decode('ascii')
+            print(val)
+            values.append(val)
+        return render_template("home.jinja2", elements=values), HTTPStatus.OK
+    except Exception as e:
+        logging.critical(f"Couldn't initialize landscreen due to {str(e)}")
+        return render_template("home.jinja2", elements=[]), HTTPStatus.OK
+
+@bp.route('/favicon.ico')
+def favicon():
+    return url_for('static', filename='image/favicon.ico'), HTTPStatus.OK
 
 @bp.route("/<id>", methods=['GET'])
 @bp.route("/<id>/", methods=['GET'])
 @redishelper.redis_connection
 def get_link(id):
-    print(f"id : {id}")
-    err, link = redishelper.get_key(id)
-    if err:
-        return f"<p>{err}</p>"
-    if link:
-        link = json.loads(link)
-        link = link.get("link")
-        return redirect(f"{link}")
-    return "<p>Empty</p>"
+    return utils.link_details(id, describe=False), HTTPStatus.PERMANENT_REDIRECT
 
 @bp.route("/describe/<id>", methods=['GET'])
 @bp.route("/describe/<id>/", methods=['GET'])
 @redishelper.redis_connection
 def describe_link(id):
-    err, link = redishelper.get_key(id)
+    return utils.link_details(id, describe=True), HTTPStatus.OK
+
+@bp.route("/delete/<id>", methods=['DELETE'])
+@bp.route("/delete/<id>/", methods=['DELETE'])
+@redishelper.redis_connection
+def delete_alias(id):
+    err, found = redishelper.get_key(id)
     if err:
-        return f"<p>{err}</p>"
-    if link:
-        link = json.loads(link)
-        return link
-    return "<p>Empty</p>"
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    if found is None:
+        return utils.paragraph_tag("Not Found"), HTTPStatus.NOT_FOUND
+    err, res = redishelper.delete_key(id)
+    if err:
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    return utils.paragraph_tag("Done"), HTTPStatus.OK
 
 @bp.route("/add", methods=['POST'])
 @bp.route("/add/", methods=['POST'])
 @redishelper.redis_connection
 def add_link():
-    err = request_validator(request)
+    err = utils.request_validator(request)
     if err:
-        return err
-    link = request.form.get("link")
-    alias = request.form.get("alias")
+        return err, HTTPStatus.BAD_REQUEST
+    link = request.form.get(constants.URL_PARAMS_LINK)
+    alias = request.form.get(constants.URL_PARAMS_ALIAS)
     err, duplicate = redishelper.get_key(alias)
     if err:
-        return f"<p>{err}</p>"
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
     if duplicate is not None:
-        return "<p>Duplicate alias</p>"
-    data = {"link" : link}
+        return utils.paragraph_tag("Duplicate alias"), HTTPStatus.BAD_REQUEST
+    data = {
+        constants.URL_PARAMS_LINK : link,
+        constants.URL_PARAMS_CREATED: str(datetime.datetime.now())
+        }
+    owner = request.form.get(constants.URL_PARAMS_OWNER)
+    if owner:
+        data[constants.URL_PARAMS_OWNER] = owner
+    category = request.form.get(constants.URL_PARAMS_CATEGORY)
+    if category:
+        data[constants.URL_PARAMS_CATEGORY] = category
     err, resp = redishelper.set_key(alias, json.dumps(data))
     if err:
-        return f"<p>{err}</p>"
-    # git.push_to_repo_branch(helpers.FILE_NAME, helpers.FILE_PATH + helpers.FILE_NAME, "bssam1996/aliaser", "main", "bssam1996", "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")
-    return "<p>Done</p>"
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    return utils.paragraph_tag("Done"), HTTPStatus.OK
 
 @bp.route("/replace", methods=['POST'])
 @bp.route("/replace/", methods=['POST'])
 @redishelper.redis_connection
 def replace_link():
-    err = request_validator(request)
+    err = utils.request_validator(request)
     if err:
-        return err
-    link = request.form.get("link")
-    alias = request.form.get("alias")
-    data = {"link" : link}
+        return err, HTTPStatus.BAD_REQUEST
+    link = request.form.get(constants.URL_PARAMS_LINK)
+    alias = request.form.get(constants.URL_PARAMS_ALIAS)
+    err, current_data = redishelper.get_key(alias)
+    if err:
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    data = {
+        constants.URL_PARAMS_LINK : link,
+        }
+    if current_data is not None:
+        data[constants.URL_PARAMS_MODIFIED] = str(datetime.datetime.now())
+        current_data = json.loads(current_data)
+        if current_data.get(constants.URL_PARAMS_CREATED):
+            data[constants.URL_PARAMS_CREATED] = current_data.get(constants.URL_PARAMS_CREATED)
+        else:
+            data[constants.URL_PARAMS_CREATED] = str(datetime.datetime.now())
+        if current_data.get(constants.URL_PARAMS_OWNER):
+            data[constants.URL_PARAMS_OWNER] = current_data.get(constants.URL_PARAMS_OWNER)
+        if current_data.get(constants.URL_PARAMS_CATEGORY):
+            data[constants.URL_PARAMS_CATEGORY] = current_data.get(constants.URL_PARAMS_CATEGORY)
+    else:
+        data[constants.URL_PARAMS_CREATED] = str(datetime.datetime.now())
+    owner = request.form.get(constants.URL_PARAMS_OWNER)
+    if owner:
+        data[constants.URL_PARAMS_OWNER] = owner
+    category = request.form.get(constants.URL_PARAMS_CATEGORY)
+    if category:
+        data[constants.URL_PARAMS_CATEGORY] = category
     err, resp = redishelper.set_key(alias, json.dumps(data))
     if err:
-        return f"<p>{err}</p>"
-    return "<p>Done</p>"
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    return utils.paragraph_tag("Done"), HTTPStatus.OK
 
-
-def request_validator(req):
-    try:
-        if len(request.form) == 0:
-            return "<p>Empty data sent</p>"
-        if request.form.get("link") is None:
-            return "<p>Link doesn't exist</p>"
-        if request.form.get("alias") is None:
-            return "<p>alias doesn't exist</p>"
-        http_string = "http://"
-        https_string = "https://"
-        link = request.form.get("link")
-        if len(link) < len(http_string) or \
-                link[:len(http_string)] != http_string and \
-                link[:len(https_string)] != https_string:
-            return "<p>link must start with http or https</p>"
-    except Exception as e:
-            print(f"Couldn't parse data due to {str(e)}")
-            return "<p>Couldn't parse data</p>"
-    return None

@@ -12,6 +12,13 @@
 <body>
 {# {% include 'navigation.jinja2' %} #}
 {% block content %}{% endblock %}
+{% block table %}{% endblock %}
 </body>
+
+<script type = "text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/datatable/dataTables.js') }}"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/datatable/dataTables.bootstrap5.js') }}"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
 
 </html>

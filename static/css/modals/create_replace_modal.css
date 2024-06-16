@@ -1,0 +1,201 @@
+/* The Modal (background) */
+.create-replace-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    text-align: center;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .create-replace-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .create-replace-modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .create-replace-modal-close:hover,
+  .create-replace-modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Modal Header */
+.create-replace-modal-header {
+  padding: 2px 16px;
+  background-color: rgb(77,126,62);
+  color: white;
+  height: 50px;
+  vertical-align: middle;
+}
+
+/* Modal Body */
+.create-replace-modal-body {
+  padding: 2px 16px;
+  background-color: rgb(242, 255, 239);
+}
+
+/* Modal Content */
+.create-replace-modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  top: 30%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: fadeInAnimation;
+  animation-duration: 0.5s
+}
+
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+
+.formbold-input-group {
+  margin-bottom: 18px;
+}
+.formbold-form-select {
+  width: 100%;
+  padding: 12px 22px;
+  border-radius: 5px;
+  border: 1px solid #dde3ec;
+  background: #ffffff;
+  font-size: 16px;
+  color: #536387;
+  outline: none;
+  resize: none;
+}
+
+.formbold-form-input {
+  width: 100%;
+  padding: 13px 22px;
+  border-radius: 5px;
+  border: 1px solid #dde3ec;
+  background: #ffffff;
+  font-weight: 500;
+  font-size: 16px;
+  color: #07074d;
+  outline: none;
+  resize: none;
+}
+
+.formbold-form-input::placeholder {
+  color: #536387;
+}
+.formbold-form-input:focus {
+  border-color: #6a64f1;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+.formbold-form-label {
+  text-align: left;
+  color: #07074d;
+  font-size: 16px;
+  line-height: 24px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.create-btn,.replace-btn{
+  border: 3px solid rgb(8, 133, 56);
+  background: rgba(12, 47, 0, 0.566);
+  font-size: 18px;
+  color: white;
+  margin-top: 20px;
+  /* padding: 10px 50px; */
+  cursor: pointer;
+  transition: .4s;
+  &:hover {
+    background: rgba(1, 37, 11, 0.8);
+    /* padding: 10px 70px; */
+  }
+}
+
+.create-formbold-btn {
+  text-align: center;
+  width: 20%;
+  font-size: 18px;
+  border-radius: 5px;
+  padding: 14px 25px;
+  border: none;
+  font-weight: bold;
+  background-color: rgba(12, 47, 0, 0.566);
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+.create-formbold-btn:hover {
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+.replace-formbold-btn {
+  text-align: center;
+  width: 20%;
+  font-size: 18px;
+  border-radius: 5px;
+  padding: 14px 25px;
+  border: none;
+  font-weight: bold;
+  background-color: rgba(15, 23, 13, 0.566);
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+.replace-formbold-btn:hover {
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.formbold-form-select {
+  width: 100%;
+  padding: 12px 22px;
+  border-radius: 5px;
+  border: 1px solid #dde3ec;
+  background: #ffffff;
+  font-size: 16px;
+  color: #536387;
+  outline: none;
+  resize: none;
+}
+
+.create-replace-button-div{
+  display: flex;
+  justify-content: center;
+}
+
+.error-message{
+  text-align: center;
+  color: red;
+}
+.success-message{
+  text-align: center;
+  color: green;
+}
+

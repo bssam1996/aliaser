@@ -1,0 +1,6 @@
+URL_PARAMS_LINK = "link"
+URL_PARAMS_ALIAS = "alias"
+URL_PARAMS_OWNER = "owner"
+URL_PARAMS_CREATED= "created"
+URL_PARAMS_CATEGORY= "category"
+URL_PARAMS_MODIFIED= "modified"

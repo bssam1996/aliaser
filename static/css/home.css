@@ -1,0 +1,47 @@
+.form-class{
+    text-align: center;
+}
+.main-image{
+    width: 20%;
+}
+
+.keys-table-div{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.active>.page-link{
+  background-color: rgb(8, 133, 56);
+  border-color: rgb(13, 204, 86);
+}
+
+.main-create-replace-btn{
+  border: 3px solid rgb(8, 133, 56);
+  background: rgba(12, 47, 0, 0.566);
+  font-size: 18px;
+  color: white;
+  margin-top: 20px;
+  padding: 10px 50px;
+  cursor: pointer;
+  transition: .4s;
+  &:hover {
+    background: rgba(1, 37, 11, 0.8);
+    padding: 10px 70px;
+  }
+}
+
+.delete-btn {
+  background-color: lightcoral;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: red;
+  }
+}
+
+.table-actions{
+  text-align: center;
+}
