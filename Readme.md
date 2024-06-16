@@ -1,4 +1,4 @@
-![Aliaser image](static/img/aliaser.png =100x20)
+![Aliaser image](static/img/aliaser.png)
 
 # Aliaser
 
