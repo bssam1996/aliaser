@@ -1,4 +1,4 @@
-![Aliaser image](static/img/aliaser.png)
+[<img src="static/img/aliaser.png" width="250"/>](static/img/aliaser.png)
 
 # Aliaser
 
