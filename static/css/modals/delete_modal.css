@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.create-replace-modal {
+.delete-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
@@ -14,7 +14,7 @@
   }
   
   /* Modal Content/Box */
-  .create-replace-modal-content {
+  .delete-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -23,22 +23,22 @@
   }
   
   /* The Close Button */
-  .create-replace-modal-close {
+  .delete-modal-close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
   }
   
-  .create-replace-modal-close:hover,
-  .create-replace-modal-close:focus {
+  .delete-modal-close:hover,
+  .delete-modal-close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
   }
 
   /* Modal Header */
-.create-replace-modal-header {
+.delete-modal-header {
   padding: 2px 16px;
   background-color: rgb(77,126,62);
   color: white;
@@ -47,13 +47,13 @@
 }
 
 /* Modal Body */
-.create-replace-modal-body {
+.delete-modal-body {
   padding: 2px 16px;
   background-color: rgb(242, 255, 239);
 }
 
 /* Modal Content */
-.create-replace-modal-content {
+.delete-modal-content {
   position: relative;
   background-color: #fefefe;
   margin: auto;
@@ -76,52 +76,34 @@
   }
 }
 
-
-.formbold-input-group {
-  margin-bottom: 18px;
-}
-.formbold-form-select {
-  width: 100%;
-  padding: 12px 22px;
+.delete-modal-btn {
+  border: 3px solid rgb(174, 74, 7);
+  background: rgba(186, 3, 3, 0.566);
+  font-size: 18px;
+  color: white;
+  margin-top: 20px;
+  /* padding: 10px 50px; */
+  cursor: pointer;
+  transition: .4s;
+  &:hover {
+    background: rgba(1, 37, 11, 0.8);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+  }
+  text-align: center;
+  width: 20%;
+  font-size: 18px;
   border-radius: 5px;
-  border: 1px solid #dde3ec;
-  background: #ffffff;
-  font-size: 16px;
-  color: #536387;
-  outline: none;
-  resize: none;
+  padding: 14px 25px;
+  border: none;
+  font-weight: bold;
+  background-color: rgba(186, 3, 3, 0.566);
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 5px;
 }
-
-.formbold-form-input {
-  width: 100%;
-  padding: 13px 22px;
-  border-radius: 5px;
-  border: 1px solid #dde3ec;
-  background: #ffffff;
-  font-weight: 500;
-  font-size: 16px;
-  color: #07074d;
-  outline: none;
-  resize: none;
-}
-
-.formbold-form-input::placeholder {
-  color: #536387;
-}
-.formbold-form-input:focus {
-  border-color: #6a64f1;
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-}
-.formbold-form-label {
-  text-align: left;
-  color: #07074d;
-  font-size: 16px;
-  line-height: 24px;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.create-btn,.replace-btn{
+.cancel-delete-modal-btn {
   border: 3px solid rgb(8, 133, 56);
   background: rgba(12, 47, 0, 0.566);
   font-size: 18px;
@@ -132,29 +114,8 @@
   transition: .4s;
   &:hover {
     background: rgba(1, 37, 11, 0.8);
-    /* padding: 10px 70px; */
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
   }
-}
-
-.create-formbold-btn {
-  text-align: center;
-  width: 20%;
-  font-size: 18px;
-  border-radius: 5px;
-  padding: 14px 25px;
-  border: none;
-  font-weight: bold;
-  background-color: rgba(12, 47, 0, 0.566);
-  color: white;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  margin-right: 5px;
-}
-.create-formbold-btn:hover {
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-}
-.replace-formbold-btn {
   text-align: center;
   width: 20%;
   font-size: 18px;
@@ -169,28 +130,13 @@
   margin-bottom: 10px;
   margin-left: 5px;
 }
-.replace-formbold-btn:hover {
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-}
 
-.formbold-form-select {
-  width: 100%;
-  padding: 12px 22px;
-  border-radius: 5px;
-  border: 1px solid #dde3ec;
-  background: #ffffff;
-  font-size: 16px;
-  color: #536387;
-  outline: none;
-  resize: none;
-}
-
-.create-replace-button-div{
+.delete-button-div{
   display: flex;
   justify-content: center;
 }
 
-.error-message{
+.delete-error-message{
   text-align: center;
   color: red;
 }

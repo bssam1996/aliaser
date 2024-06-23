@@ -19,7 +19,7 @@ def gitlab_auth():
         logging.warn("GITLAB_HOST is not set, using http://localhost:80 instead")
         gitlab_link = "http://localhost:80"
     try:
-        gl = gitlab.Gitlab(gitlab_link, private_token='glpat-TuzAGjfkzoqExLz_qycj')
+        gl = gitlab.Gitlab(gitlab_link, private_token=gitlab_token, ssl_verify='/etc/ssl/cert.pem')
         gl.auth()
         return None
     except Exception as e:

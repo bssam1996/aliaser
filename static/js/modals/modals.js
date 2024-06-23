@@ -1,26 +1,43 @@
 // Get the modal
 var create_replace_modal = document.getElementById("create_replace_modal");
+var delete_modal = document.getElementById("delete_modal");
 
 // Get the button that opens the modal
 var create_replace_btn = document.getElementById("create_replace_modal_button");
 
 // Get the <span> element that closes the modal
 var create_replace_span = document.getElementsByClassName("create-replace-modal-close")[0];
+var delete_modal_span = document.getElementsByClassName("delete-modal-close")[0];
 
 // When the user clicks on the button, open the modal
 create_replace_btn.onclick = function() {
     create_replace_modal.style.display = "block";
 }
 
+function undisplay_delete(){
+    delete_modal.style.display = "none";
+}
+
+function display_delete(alias){
+    delete_modal.style.display = "block";
+    var delete_msg_title = document.getElementById("delete-title-message");
+    delete_msg_title.innerHTML = "Are you sure you want to delete "+ alias + "?";
+    document.getElementById("delete-modal-btn").setAttribute('onclick','delete_alias("' + alias +'")')
+}
 // When the user clicks on <span> (x), close the modal
 create_replace_span.onclick = function() {
     create_replace_modal.style.display = "none";
+}
+delete_modal_span.onclick = function() {
+    undisplay_delete();
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == create_replace_modal) {
     create_replace_modal.style.display = "none";
+  }else if (event.target == delete_modal){
+    delete_modal.style.display = "none";
   }
 }
 
@@ -32,21 +49,17 @@ function add_alias(replace=false){
     category = document.getElementById('category').value;
 
     errormsg = document.getElementById('error_create_replace');
-    successmsg = document.getElementById('success_create_replace');
 
     if(alias.length == 0){
         errormsg.innerHTML = `Alias is required`;
-        successmsg.innerHTML = "";
         return
     }
     if(link.length == 0){
         errormsg.innerHTML = `Link is required`;
-        successmsg.innerHTML = "";
         return
     }
     if(validateUrl(link) == 0){
         errormsg.innerHTML = `Link must start with http:// or https://`;
-        successmsg.innerHTML = "";
         return
     }
 
@@ -68,13 +81,13 @@ function add_alias(replace=false){
         success: function (data) {
             console.log(`${data.responseText}`);
             errormsg.innerHTML = "";
-            successmsg.innerHTML = "Done";
             reset();
+            create_replace_span.click();
+            location.reload();
         },
         error: function (err) {
             console.log(`${err.responseText}`);
             errormsg.innerHTML = `${err.responseText}`;
-            successmsg.innerHTML = "";
         }
     });
 }
@@ -91,4 +104,21 @@ function reset(){
     document.getElementById('link').value = "";
     document.getElementById('owner').value = "";
     document.getElementById('category').value = "";
+}
+
+function delete_alias(alias){
+    $.ajax({
+        url: './delete/' + alias,
+        type: "DELETE",
+        success: function (data) {
+            // Delete TD Row
+            dt = document.getElementById("keys_table");
+            dt.querySelector(`[data-row-id="${alias}"]`).remove();
+            delete_modal_span.click();
+        },
+        error: function (err) {
+            console.log(`${err.responseText}`);
+            alert(err.responseText);
+        }
+    });
 }

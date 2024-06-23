@@ -6,6 +6,7 @@
   <link href="{{ url_for('static', filename='css/dataTables.bootstrap5.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/modals/create_replace_modal.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/modals/delete_modal.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -15,5 +16,5 @@
     </div>
     {% include 'table.jinja2' %}
     {% include './modals/create_replace.jinja2' %}
-    {# {% block table %}{% endblock %} #}
+    {% include './modals/delete.jinja2' %}
 {% endblock %}

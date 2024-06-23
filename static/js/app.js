@@ -11,24 +11,3 @@ $(document).ready(function(){
         ]
         });
 });
-
-
-
-function delete_alias(alias){
-
-    console.log("Delete Function");
-
-    $.ajax({
-        url: './delete/' + alias,
-        type: "DELETE",
-        success: function (data) {
-            // Delete TD Row
-            dt = document.getElementById("keys_table");
-            dt.querySelector(`[data-row-id="${alias}"]`).remove();
-        },
-        error: function (err) {
-            console.log(`${err.responseText}`);
-            alert(err.responseText);
-        }
-    });
-}
