@@ -8,24 +8,33 @@
                 <th>Alias</th>
                 <th>Owner</th>
                 <th>Category</th>
+                <th>Site</th>
                 <th>Created</th>
                 <th>Modified</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+            {% set landscreen = url_for('main.landscreen', _external=True) %}
             {% for element in elements %}
                 {% set alias = element.get("alias") %}
+                {% set link = element.get("link") %}
+                {% set owner = element.get("owner") %}
+                {% set category = element.get("category") %}
+                {% set site = element.get("site") %}
                 <tr data-row-id='{{element.get("alias")}}'>
-                    <td><a href='{{element.get("link")}}' target="_blank">{{alias}}</a></td>
-                    <td>{{element.get("owner")}}</td>
-                    <td>{{element.get("category")}}</td>
+                    <td><a href='{{link}}' target="_blank">{{alias}}</a></td>
+                    <td>{{owner}}</td>
+                    <td>{{category}}</td>
+                    <td>{{site}}</td>
                     <td>{{element.get("created")}}</td>
                     <td>{{element.get("modified")}}</td>
                     <td>
                         <div class="table-actions">
                             {# onclick='delete_alias("{{alias}}")' #}
-                            <button onclick="display_delete('{{alias}}')" class="delete-btn" ><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="copy_alias('{{landscreen + alias}}')" class="copy-btn" data-toggle="tooltip" data-placement="top" title="Copy"><i class="fa-solid fa-copy"></i></button>
+                            <button onclick="display_edit('{{alias}}', '{{link}}' , '{{owner}}' , '{{category}}' , '{{site}}')" class="action_edit-btn" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa-solid fa-edit"></i></button>
+                            <button onclick="display_delete('{{alias}}')" class="delete-btn" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>

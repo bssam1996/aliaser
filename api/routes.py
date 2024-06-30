@@ -84,6 +84,9 @@ def add_link():
     category = request.form.get(constants.URL_PARAMS_CATEGORY)
     if category:
         data[constants.URL_PARAMS_CATEGORY] = category
+    site = request.form.get(constants.URL_PARAMS_SITE)
+    if site:
+        data[constants.URL_PARAMS_SITE] = site
     err, resp = redishelper.set_key(alias, json.dumps(data))
     if err:
         return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
@@ -115,6 +118,8 @@ def replace_link():
             data[constants.URL_PARAMS_OWNER] = current_data.get(constants.URL_PARAMS_OWNER)
         if current_data.get(constants.URL_PARAMS_CATEGORY):
             data[constants.URL_PARAMS_CATEGORY] = current_data.get(constants.URL_PARAMS_CATEGORY)
+        if current_data.get(constants.URL_PARAMS_SITE):
+            data[constants.URL_PARAMS_SITE] = current_data.get(constants.URL_PARAMS_SITE)
     else:
         data[constants.URL_PARAMS_CREATED] = str(datetime.datetime.now())
     owner = request.form.get(constants.URL_PARAMS_OWNER)
@@ -124,6 +129,57 @@ def replace_link():
     if category:
         data[constants.URL_PARAMS_CATEGORY] = category
     err, resp = redishelper.set_key(alias, json.dumps(data))
+    if err:
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    return utils.paragraph_tag("Done"), HTTPStatus.OK
+
+@bp.route("/edit", methods=['POST'])
+@bp.route("/edit/", methods=['POST'])
+@redishelper.redis_connection
+def edit():
+    err = utils.request_edit_validator(request)
+    if err:
+        return err, HTTPStatus.BAD_REQUEST
+    link = request.form.get(constants.URL_PARAMS_LINK)
+    old_alias = request.form.get(constants.URL_PARAMS_EDIT_OLD_ALIAS)
+    new_alias = request.form.get(constants.URL_PARAMS_EDIT_NEW_ALIAS)
+
+    if old_alias != new_alias:
+        err, duplicate = redishelper.get_key(new_alias)
+        if err:
+            return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+        if duplicate is not None:
+            return utils.paragraph_tag("Duplicate alias"), HTTPStatus.BAD_REQUEST
+    
+    err, current_data = redishelper.get_key(old_alias)
+    if err:
+        return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    data = {
+        constants.URL_PARAMS_LINK : link,
+        constants.URL_PARAMS_CREATED: str(datetime.datetime.now())
+        }
+    
+    if current_data is not None:
+        data[constants.URL_PARAMS_MODIFIED] = str(datetime.datetime.now())
+        current_data = json.loads(current_data)
+        if current_data.get(constants.URL_PARAMS_CREATED):
+            data[constants.URL_PARAMS_CREATED] = current_data.get(constants.URL_PARAMS_CREATED)
+
+        # Delete Key
+        err, res = redishelper.delete_key(old_alias)
+        if err:
+            return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
+    
+    owner = request.form.get(constants.URL_PARAMS_OWNER)
+    if owner:
+        data[constants.URL_PARAMS_OWNER] = owner
+    category = request.form.get(constants.URL_PARAMS_CATEGORY)
+    if category:
+        data[constants.URL_PARAMS_CATEGORY] = category
+    site = request.form.get(constants.URL_PARAMS_SITE)
+    if site:
+        data[constants.URL_PARAMS_SITE] = site
+    err, resp = redishelper.set_key(new_alias, json.dumps(data))
     if err:
         return utils.paragraph_tag(err), HTTPStatus.INTERNAL_SERVER_ERROR
     return utils.paragraph_tag("Done"), HTTPStatus.OK

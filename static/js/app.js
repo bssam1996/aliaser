@@ -10,4 +10,11 @@ $(document).ready(function(){
             { "orderable": false, "targets": 5 }
         ]
         });
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        });
 });
+
+function copy_alias(full_link){
+    navigator.clipboard.writeText(full_link);
+}

@@ -41,7 +41,33 @@
     background-color: red;
   }
 }
+.copy-btn {
+  background-color: rgb(178, 173, 173);
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(78, 78, 78);
+  }
+}
+.action_edit-btn {
+  background-color: rgb(74, 10, 251);
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(38, 7, 92);
+  }
+}
 
 .table-actions{
   text-align: center;
+}
+
+.disabled-input{
+  background-color: rgba(239, 239, 239, 0.3) !important;
 }

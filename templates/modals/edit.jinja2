@@ -1,0 +1,82 @@
+<!-- The Modal -->
+<div id="edit_modal" class="edit-modal">
+
+  <!-- Modal content -->
+    <div class="edit-modal-content">
+        <div class="edit-modal-header">
+            <span class="edit-modal-close">&times;</span>
+            <h3>Edit alias</h3>
+        </div>
+        <div class="edit-modal-body">
+        <form method="post">
+            <div class="formbold-input-group">
+                <label for="edit-old-alias" class="formbold-form-label"> Old Alias* </label>
+                <input
+                    type="text"
+                    name="edit-old-alias"
+                    id="edit-old-alias"
+                    placeholder="Enter your old alias"
+                    class="formbold-form-input disabled-input"
+                    required
+                    disabled
+                />
+                <label for="edit-new-alias" class="formbold-form-label"> New Alias* </label>
+                <input
+                    type="text"
+                    name="edit-new-alias"
+                    id="edit-new-alias"
+                    placeholder="Enter your new alias"
+                    class="formbold-form-input"
+                    required
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="edit-link" class="formbold-form-label"> Link* </label>
+                <input
+                    type="text"
+                    name="edit-link"
+                    id="edit-link"
+                    placeholder="Enter your link"
+                    class="formbold-form-input"
+                    required
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="edit-owner" class="formbold-form-label"> Owner </label>
+                <input
+                    type="text"
+                    name="edit-owner"
+                    id="edit-owner"
+                    placeholder="Owner's name"
+                    class="formbold-form-input"
+                />
+            </div>
+            <div class="formbold-input-group">
+                <label for="edit-category" class="formbold-form-label"> Category </label>
+                <select name="edit-category" id="edit-category" class="formbold-form-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="UDM">UDM</option>
+                    <option value="DC">DC</option>
+                    <option value="DM">DM</option>
+                    <option value="Mermaid">Mermaid</option>
+                </select>
+            </div>
+            <div class="formbold-input-group">
+                <label for="edit-site" class="formbold-form-label"> Site </label>
+                <select name="edit-site" id="edit-site" class="formbold-form-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="Houston">Houston</option>
+                    <option value="Bolney">Bolney</option>
+                </select>
+            </div>
+            <br>
+            <div id="error_edit" class="error-message"></div>
+            <div class="edit-button-div">
+                <input type="submit" value="Edit" class="edit-btn edit-formbold-btn" formaction="javascript:edit_alias()">
+                <input type="submit" value="Cancel" class="cancel-edit-modal-btn" onclick="undisplay_edit()">
+            </div>
+            </form>
+        </div>
+    </div>
+
+</div>

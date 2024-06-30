@@ -16,6 +16,7 @@ alias: name of the alias
 link: link to be redirected at
 owner: owner of the alias <optional>
 category: category of the alias <optional>
+site: site of the alias <optional>
 ```
 [POST] `/replace`: add or overwrite existing alias with the following provided details in the payload:-
 ```
@@ -23,6 +24,15 @@ alias: name of the alias
 link: link to be redirected at
 owner: owner of the alias <optional>
 category: category of the alias <optional>
+site: site of the alias <optional>
+```
+[POST] `/edit`: edit existing alias with the following provided details in the payload:-
+```
+old_alias: name of the old alias to be replaced
+new_alias: name of the new alias
+link: link to be redirected at
+owner: owner of the alias <optional>
+site: site of the alias <optional>
 ```
 [DELETE] `/delete/<alias>`: Deletes provided alias
 
@@ -52,7 +62,5 @@ category: category of the alias <optional>
 Redis is used as caching
 
 Flask for API
-
-Jinja for frontend
 
 Backup to Github or Gitlab with filename `locations.json`
